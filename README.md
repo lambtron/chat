@@ -1,4 +1,4 @@
-node_app
-========
+Phantchat
+=========
 
-First nodejs app!
+Chat on the web like how you chat in real life.
