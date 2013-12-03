@@ -16,5 +16,8 @@ app.use(express.bodyParser());
 
 // routing
 app.get('/', function (req, res) {
+	// Send a text message.
+	// Receive a text message.
   res.render('index.jade');
 });
+
