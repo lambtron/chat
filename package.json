@@ -3,6 +3,7 @@
     "description": "Web-based SMS chat app",
     "version": "0.0.1",
     "author": "Andy Jiang",
+    "main": "server.js",
     "repository": {
         "type": "git",
         "url": "https://github.com/lambtron/chat.git"

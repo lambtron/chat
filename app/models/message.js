@@ -27,7 +27,7 @@ var MessageSchema = new Schema({
         default: '',
         trim: true
     }
-})
+});
 
 /**
  * Validations
@@ -47,4 +47,4 @@ MessageSchema.statics = {
     }
 };
 
-mongoose.model('Article', ArticleSchema);
+mongoose.model('Message', MessageSchema);
