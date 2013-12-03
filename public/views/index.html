@@ -2,7 +2,7 @@
 <!DOCTYPE HTML>
 
 <!-- ASSIGN OUR ANGULAR MODULE -->
-<html ng-app="chatView">
+<html>
 <head>
 	<!-- META -->
 	<meta charset="utf-8">
@@ -13,20 +13,64 @@
 	<!-- SCROLLS -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
 	<style>
-		html 					{ overflow-y:scroll; }
-		body 					{ padding-top:50px; }
-		#todo-list 				{ margin-bottom:30px; }
+		html { overflow-y:scroll; }
+		body { padding-top:50px; }
 	</style>
 
 	<!-- SPELLS -->
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script><!-- load angular -->
-	<script src="../js/config.js"></script>
+	<script>
 
-</head>
+var chatView = angular.module('chatView', []);
+
+function mainController($scope, $http) {
+    $scope.formData = {};
+
+    // When landing on the page, get all chats and a few pieces of each chat history.
+    // You need to access the Nodejs API here.
+    $http.get('/api/messages')
+        .success(function(data) {
+            $scope.messages = data;
+            console.log(data);
+        })
+        .error(function(data) {
+            console.log('Error: ' + data);
+        })
+
+    // When submitting a chat message, send the text to the node API
+    // Node API will then send call function to send it via Twilio
+    // and to save it to MongoDB.
+    $scope.sendMessage = function() {
+        // Make sure $scope.formData has the 'to' field.
+        $http.post('/api/message', $scope.formData)
+            .success(function(data) {
+                $('input').val('');
+                $scope.messages = data;
+                console.log(data);
+            })
+            .error(function(data) {
+                console.log('Error: ' + data);
+            });
+    };
+
+    // delete a todo after checking it
+    $scope.deleteMessage = function(id) {
+        $http.delete('/api/message/' + id)
+            .success(function(data) {
+                $scope.messages = data;
+                console.log(data);
+            })
+            .error(function(data) {
+                console.log('Error: ' + data);
+            });
+    };
+
+}
+
 <!-- SET THE CONTROLLER AND GET ALL TODOS WITH INITIALIZE FUNCTION -->
-<body ng-controller="mainController">
+<body ng-app="chatView" ng-controller="mainController">
 	<div class="container">
 
 		<!-- CHAT BOX -->

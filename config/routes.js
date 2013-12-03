@@ -1,4 +1,18 @@
-var Message = require('../app/models/message.js');
+/**
+ * Import all models ===============================================================================
+ */
+require('../app/models/message.js');
+
+
+/**
+ * Module dependencies =============================================================================
+ */
+var mongoose = require('mongoose')
+	, Message = mongoose.model('Message')
+	, _ = require('underscore');
+
+console.log('message: ');
+console.log(Message);
 
 module.exports = function(app) {
 	// API routes for Message model ==================================================================
@@ -6,8 +20,8 @@ module.exports = function(app) {
 	app.get('/api/messages', function(req, res) {
 		// Use Mongoose to get all of the messages in the database.
 		Message.find(function(err, messages) {
-			// If there is an error while retrieving, send the error, nothing after res.send(err) will
-			// 		execute.
+			// If there is an error while retrieving, send the error, nothing after res.send(err) 
+			// will	execute.
 			if (err) {
 				res.send(err);
 			};
