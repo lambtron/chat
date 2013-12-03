@@ -1,3 +1,4 @@
-- Send and receive SMS
-- Save SMS history in mongodb
-- 
+- make sure angular is working.
+- send SMS via angular (index.html)
+- when sending SMS, also save it to the mongodb
+- receive SMS.
