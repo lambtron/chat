@@ -32,10 +32,12 @@ module.exports = function(app) {
 	});
 
 	// Create a Message and send back all Messages.
-	app.post('/api/messages', function(req, res) {
-		var body = req.body.text;
-		var to = req.body.to;
-		var from = req.body.from;
+	app.post('/api/message', function(req, res) {
+		// Debugging purposes.
+		console.log(JSON.stringify(req.body, null, 4));
+		var body = req.body.formData.text;
+		var to = req.body.toData.text;
+		var from = req.body;
 
 		// Call Twilio's API to send the Message.
 

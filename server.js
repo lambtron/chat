@@ -10,7 +10,7 @@ var express = require('express')
 // Configuration ===================================================================================
 mongoose.connect(database.url);
 
-app.set('views', __dirname + 'pubilc/views');
+app.set('views', __dirname + 'public/views');
 app.set('view engine', 'jade');
 app.use('/assets', express.static(__dirname + '/assets'));
 app.use('/public', express.static(__dirname + '/public'));

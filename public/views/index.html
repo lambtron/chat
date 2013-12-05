@@ -21,53 +21,7 @@
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script><!-- load angular -->
-	<script>
-
-var chatView = angular.module('chatView', []);
-
-function mainController($scope, $http) {
-    $scope.formData = {};
-
-    // When landing on the page, get all chats and a few pieces of each chat history.
-    // You need to access the Nodejs API here.
-    $http.get('/api/messages')
-        .success(function(data) {
-            $scope.messages = data;
-            console.log(data);
-        })
-        .error(function(data) {
-            console.log('Error: ' + data);
-        })
-
-    // When submitting a chat message, send the text to the node API
-    // Node API will then send call function to send it via Twilio
-    // and to save it to MongoDB.
-    $scope.sendMessage = function() {
-        // Make sure $scope.formData has the 'to' field.
-        $http.post('/api/message', $scope.formData)
-            .success(function(data) {
-                $('input').val('');
-                $scope.messages = data;
-                console.log(data);
-            })
-            .error(function(data) {
-                console.log('Error: ' + data);
-            });
-    };
-
-    // delete a todo after checking it
-    $scope.deleteMessage = function(id) {
-        $http.delete('/api/message/' + id)
-            .success(function(data) {
-                $scope.messages = data;
-                console.log(data);
-            })
-            .error(function(data) {
-                console.log('Error: ' + data);
-            });
-    };
-
-}
+	<script src="/public/views/config.js"></script>
 
 <!-- SET THE CONTROLLER AND GET ALL TODOS WITH INITIALIZE FUNCTION -->
 <body ng-app="chatView" ng-controller="mainController">
@@ -80,6 +34,8 @@ function mainController($scope, $http) {
 					<div class="form-group">
 
 						<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+
+                        <input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="toData.text">
 						<input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.text">
 					</div>
 

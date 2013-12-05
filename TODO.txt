@@ -1,5 +1,3 @@
-- figure out how to dynamically link config.js within index.html; end goal is to have ng-app to 
-    the entire html dom element
 - figure out how to propoerly manage the linking of mondels in the routes.js file
 - 
 - send SMS via angular (index.html)
