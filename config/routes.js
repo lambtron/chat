@@ -35,29 +35,31 @@ module.exports = function(app) {
 	app.post('/api/message', function(req, res) {
 		// Debugging purposes.
 		console.log(JSON.stringify(req.body, null, 4));
-		var body = req.body.formData.text;
-		var to = req.body.toData.text;
-		var from = req.body;
+		// var body = req.body.formData.text;
+		// var to = req.body.toData.text;
+		// var from = req.body;
 
-		// Call Twilio's API to send the Message.
+		// If POST is received from our client, then
+		// call Twilio's API to send the Message.
+		// Otherwise, it is an inbound SMS.
 
 		// Create a message; information comes from AJAX request from Angular
-		Message.create({
-			body : body,
-			to : to,
-			from : from
-		}, function(err, message) {
-			if (err) {
-				res.send(err);
-			};
+		// Message.create({
+		// 	body : body,
+		// 	to : to,
+		// 	from : from
+		// }, function(err, message) {
+		// 	if (err) {
+		// 		res.send(err);
+		// 	};
 
-			Message.find(function(err, messages) {
-				if (err) {
-					res.send(err);
-				};
-				res.json(messages);
-			});
-		});
+		// 	Message.find(function(err, messages) {
+		// 		if (err) {
+		// 			res.send(err);
+		// 		};
+		// 		res.json(messages);
+		// 	});
+		// });
 	});
 
 	// Delete a Message.
