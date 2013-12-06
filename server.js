@@ -7,6 +7,9 @@ var express = require('express')
   , database = require('./config/database')
   , port = process.env.PORT || 3000;
 
+// Set environmental variables.
+require('./config/config');
+
 // Configuration ===================================================================================
 mongoose.connect(database.url);
 
