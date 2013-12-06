@@ -3,6 +3,10 @@
  */
 require('../app/models/message.js');
 
+/**
+ * Import controllers ==============================================================================
+ */
+var Twilio = require('../app/controllers/twilio.js');
 
 /**
  * Module dependencies =============================================================================
@@ -11,21 +15,19 @@ var mongoose = require('mongoose')
 	, Message = mongoose.model('Message')
 	, _ = require('underscore');
 
-console.log('message: ');
-console.log(Message);
-
 module.exports = function(app) {
 	// API routes for Message model ==================================================================
 	// + GET all messages
 	app.get('/api/messages', function(req, res) {
 		// Use Mongoose to get all of the messages in the database.
-		Message.find(function(err, messages) {
+		// Only get the Messages in Mongodb where the 'from' or 'to' matches your Twilio number.
+		Message.find({ $or: [ {'to': '+14158586858'}, {'from': '+14158586858'} ] },
+			function(err, messages) {
 			// If there is an error while retrieving, send the error, nothing after res.send(err) 
 			// will	execute.
 			if (err) {
 				res.send(err);
 			};
-
 			// Return all messages in JSON format.
 			res.json(messages);
 		});
@@ -35,31 +37,49 @@ module.exports = function(app) {
 	app.post('/api/message', function(req, res) {
 		// Debugging purposes.
 		console.log(JSON.stringify(req.body, null, 4));
-		// var body = req.body.formData.text;
-		// var to = req.body.toData.text;
-		// var from = req.body;
 
-		// If POST is received from our client, then
-		// call Twilio's API to send the Message.
-		// Otherwise, it is an inbound SMS.
+		// Message specific variables.
+		var body = ''
+		  , to   = ''
+		  , from = '';
 
+		if(typeof req.body.MessageSid !== "undefined") {
+			// If Twilio is making the POST request, then this is an inbound SMS.
+			body = req.body.Body;
+			to = req.body.To;
+			from = req.body.From;
+		} else {
+			// Else, this is a POST request from the client, an outbound SMS.
+			body = req.body.formData.text;
+			to = req.body.toData.text;
+			// from = req.body;
+			from = '+14158586858';
+
+			// Send POST request to Twilio to initate outbound SMS.
+			// To, From, Body
+			Twilio.sendMessage(to, from, body);
+		};
+
+		// Save Message object to Mongodb.
 		// Create a message; information comes from AJAX request from Angular
-		// Message.create({
-		// 	body : body,
-		// 	to : to,
-		// 	from : from
-		// }, function(err, message) {
-		// 	if (err) {
-		// 		res.send(err);
-		// 	};
+		Message.create({
+			body : body,
+			to : to,
+			from : from
+		}, function(err, message) {
+			if (err) {
+				res.send(err);
+			};
 
-		// 	Message.find(function(err, messages) {
-		// 		if (err) {
-		// 			res.send(err);
-		// 		};
-		// 		res.json(messages);
-		// 	});
-		// });
+			// Load all new messages.
+			Message.find({ $or: [ {'to': '+14158586858'}, {'from': '+14158586858'} ] },
+				function(err, messages) {
+				if (err) {
+					res.send(err);
+				};
+				res.json(messages);
+			});
+		});
 	});
 
 	// Delete a Message.
