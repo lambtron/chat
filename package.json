@@ -17,6 +17,7 @@
         "jade": "latest",
         "mongoose": "latest",
         "bower": "latest",
-        "underscore": "latest"
+        "underscore": "latest",
+        "twilio": "latest"
     }
 }
