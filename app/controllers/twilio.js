@@ -13,5 +13,13 @@ module.exports = {
                 console.log(responseData);
             };
         });
+    },
+    standardizePhoneNumber: function(phone_number) {
+        // 2409887757 to +12409887757
+        var new_phone_number = phone_number + '';
+        if (new_phone_number.length == 10) {
+            new_phone_number = '+1' + new_phone_number;
+        };
+        return new_phone_number;
     }
 };

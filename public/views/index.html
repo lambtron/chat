@@ -2,7 +2,7 @@
 <!DOCTYPE HTML>
 
 <!-- ASSIGN OUR ANGULAR MODULE -->
-<html>
+<html lang="en">
 <head>
 	<!-- META -->
 	<meta charset="utf-8">
@@ -11,7 +11,9 @@
 	<title>Chat</title>
 
 	<!-- SCROLLS -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+	<!-- load bootstrap -->
+	
 	<style>
 		html { overflow-y:scroll; }
 		body { padding-top:50px; }
@@ -21,34 +23,57 @@
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
-	<script src="/public/js/config.js"></script>
+	<script src="/public/js/app.js"></script>
 
 <!-- SET THE CONTROLLER AND GET ALL TODOS WITH INITIALIZE FUNCTION -->
 <body ng-app="chatView" ng-controller="mainController">
 	<div class="container">
+		<div class="row">
+			<!-- Left side, the list of contacts/conversations. -->
+			<!-- body, to, from -->
+			<div class="col-md-4" style="">
+				<!-- 'Start new conversation' -->
+				<div>
 
-		<!-- CHAT BOX -->
-		<div id="chatbox" class="row">
-			<div class="col-sm-8 col-sm-offset-2 text-left">
+	        <input type="text" class="form-control input-lg text-center" placeholder="+1(240)-988-7757" ng-model="phoneNumber">
+	        <input type="text" class="form-control input-lg text-center" placeholder="Andy" ng-model="firstName">
+	        <input type="text" class="form-control input-lg text-center" placeholder="Jiang" ng-model="lastName">
+					<!-- Button to start new conversation. -->
+					<div class="btn btn-primary btn-lg" style="width: 100%" ng-click="addUser()">New</div>
+				</div>
+				<!-- List of contacts/conversations. -->
+				<!-- Get all messages, but organize them by who the to/from is. -->
+				<div>
+					<ul>
+						<li ng:repeat="user in users">
+							{{user}}
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<!-- Right side, the conversation. -->
+			<div class="col-md-8">
 				<form>
-					<div class="form-group">
-
-						<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-
-            <input type="text" class="form-control input-lg text-center" placeholder="+1(555)-555-5555" ng-model="toData.text">
-
-            <ul>
+					<div>
+						Andy
+					</div>
+					<!-- The conversation. -->
+					<div style="height: 100%; background: blue;">
+		        <ul>
 					    <li ng:repeat="message in (filteredMessages = (messages | orderBy: 'created_on':false))">
 						    {{message.body}}
 						    {{message.created_on}}
 							</li>
 						</ul>
-
-						<input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.text">
 					</div>
+					<!-- The chat box. -->
+					<div>
+						<input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.text">
 
-					<!-- createToDo() WILL CREATE NEW TODOS -->
-					<button type="submit" class="btn btn-primary btn-lg" ng-click="sendMessage()">Add</button>
+						<!-- sendMessage() WILL send POST to API -->
+						<button type="submit" class="btn btn-primary btn-lg" ng-click="sendMessage()">Send</button>
+					</div>
 				</form>
 			</div>
 		</div>

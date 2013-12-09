@@ -18,6 +18,7 @@
         "mongoose": "latest",
         "bower": "latest",
         "underscore": "latest",
-        "twilio": "latest"
+        "twilio": "latest",
+        "socket.io": "latest"
     }
 }

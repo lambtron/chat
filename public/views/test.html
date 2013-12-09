@@ -1,0 +1,40 @@
+				<!-- 'Start new conversation' -->
+				<div>
+					<!-- Button to start new conversation. -->
+					<a href='#'>New</a>
+				</div>
+				<!-- List of contacts/conversations. -->
+				<div>
+					<ul>
+						<li>
+							Andy
+						</li>
+					</ul>
+				</div>
+
+
+
+				
+
+				<form>
+					<div>
+						Andy
+		        <input type="text" class="form-control input-lg text-center" placeholder="+1(555)-555-5555" ng-model="toData.text">
+					</div>
+					<!-- The conversation. -->
+					<div>
+		        <ul>
+					    <li ng:repeat="message in (filteredMessages = (messages | orderBy: 'created_on':false))">
+						    {{message.body}}
+						    {{message.created_on}}
+							</li>
+						</ul>
+					</div>
+					<!-- The chat box. -->
+					<div>
+						<input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.text">
+
+						<!-- sendMessage() WILL send POST to API -->
+						<button type="submit" class="btn btn-primary btn-lg" ng-click="sendMessage()">Send</button>
+					</div>
+				</form>
