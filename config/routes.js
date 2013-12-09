@@ -41,11 +41,15 @@ module.exports = function(app) {
 	});
 
 
-	// + GET all messages
-	app.get('/api/messages', function(req, res) {
+	// + GET all users and messages.
+	app.get('/api/users', function(req, res) {
+		// Get the self phone number from req.
+		// var my_phone_number = req.body.my_phone_number;
+		var my_phone_number = '+14158586858';
+
 		// Use Mongoose to get all of the messages in the database.
 		// Only get the Messages in Mongodb where the 'from' or 'to' matches your Twilio number.
-		Message.find({ $or: [ {'to': '+14158586858'}, {'from': '+14158586858'} ] },
+		Message.find({ $or: [ {'to': my_phone_number}, {'from': my_phone_number} ] },
 			function(err, messages) {
 
   		// Create an array of all the phone numbers across all messages.
@@ -100,6 +104,22 @@ module.exports = function(app) {
   			res.json(new_users);
   		});
 		});
+	});
+
+	// Get messages.
+	app.get('/api/messages', function(req, res) {
+		var my_phone_number = '+14158586858';
+
+		// Use Mongoose to get all of the messages in the database.
+		// Only get the Messages in Mongodb where the 'from' or 'to' matches your Twilio number.
+		Message.find({ $or: [ {'to': my_phone_number}, {'from': my_phone_number} ] },
+			function(err, messages) {
+			if (err) {
+				res.send(err);
+			};
+			res.json(messages);
+		});
+
 	});
 
 	// Create a Message and send back all Messages.

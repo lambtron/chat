@@ -4,7 +4,7 @@ function mainController($scope, $http) {
     // When landing on the page, get all chats and a few pieces of each chat history.
     // You need to access the Nodejs API here.
     // Load only the Messages where your number is either the 'to' or the 'from'.
-    $http.get('/api/messages')
+    $http.get('/api/users')
         .success(function(data) {
             $scope.users = data;
             console.log(data);
