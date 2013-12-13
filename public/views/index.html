@@ -2,7 +2,7 @@
 <!DOCTYPE HTML>
 
 <!-- ASSIGN OUR ANGULAR MODULE -->
-<html lang="en">
+<html lang="en" ng-app="chatView">
 <head>
 	<!-- META -->
 	<meta charset="utf-8">
@@ -23,18 +23,22 @@
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
 	<script src="/public/js/app.js"></script>
+	<script src="/public/js/services.js"></script>
+	<script src="/public/js/controllers.js"></script>
+	
+</head>
 
 <!-- SET THE CONTROLLER AND GET ALL TODOS WITH INITIALIZE FUNCTION -->
-<body ng-app="chatView" ng-controller="mainController">
-	<div class="container">
+<body ng-controller="mainController">
+<div class="container">
 		<div class="row">
 			<!-- Left side, the list of contacts/conversations. -->
 			<!-- body, to, from -->
 			<div class="col-md-4" style="">
 				<!-- 'Start new conversation' -->
 				<div>
-
 	        <input type="text" class="form-control input-lg text-center" placeholder="+1(240)-988-7757" ng-model="newUser.phoneNumber">
 	        <input type="text" class="form-control input-lg text-center" placeholder="Andy" ng-model="newUser.firstName">
 	        <input type="text" class="form-control input-lg text-center" placeholder="Jiang" ng-model="newUser.lastName">
@@ -47,9 +51,6 @@
 					<label class="btn" ng-repeat="user in users">
 						<input type="radio" name="user" ng-model="$parent.query" value="{{user.phone_number}}"> {{user.first_name}} {{user.last_name}}
 					</label>
-				</div>
-				<div id="query">
-					{{query}}
 				</div>
 			</div>
 
@@ -79,8 +80,6 @@
 				</form>
 			</div>
 		</div>
-
 	</div>
-
 </body>
 </html>

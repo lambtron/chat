@@ -2,5 +2,5 @@
 - push new inbound SMS to the front end.
 - figure out the data structure for reconciling no User but with messages.
 - need to make sure that the new data structure is loading properly on the front end
-- before inserting into USERS model, check for duplicates.
 - write a function that will remove duplicates in the users model.
+- what data needed to be refreshed? messages? users? can i only refresh messages?

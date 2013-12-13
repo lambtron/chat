@@ -5,6 +5,7 @@ var express = require('express')
   , server = http.createServer(app)
   , mongoose = require('mongoose')
   , database = require('./config/database')
+  , io = require('socket.io').listen(server)
   , port = process.env.PORT || 3000;
 
 // Set environmental variables.
@@ -14,13 +15,24 @@ require('./config/config');
 mongoose.connect(database.url);
 
 app.set('views', __dirname + 'public/views');
-app.set('view engine', 'jade');
 app.use('/assets', express.static(__dirname + '/assets'));
 app.use('/public', express.static(__dirname + '/public'));
 app.use(express.bodyParser());
 
 // Routes ==========================================================================================
-require('./config/routes.js')(app);
+require('./config/routes.js')(app, io);
+
+// TESTING PURPOSES.
+// app.post('/test', function(req, res) {
+// 	console.log('received post request');
+// 	io.sockets.emit('news', {data: 'hello world'});
+// });
+
+// Application route =============================================================================
+app.get('*', function(req, res) {
+	// Load the single view file (Angular will handle the page changes).
+	res.sendfile('index.html', {'root': './public/views/'});
+});
 
 // Listen (start app with node server.js) ==========================================================
 server.listen(port, function() {

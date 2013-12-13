@@ -17,7 +17,7 @@ var mongoose = require('mongoose')
 	, User = mongoose.model('User')
 	, _ = require('underscore');
 
-module.exports = function(app) {
+module.exports = function(app, io) {
 	// API routes for Message model ==================================================================
 
 	// * POST, add new user to mongodb.
@@ -52,7 +52,6 @@ module.exports = function(app) {
 			}
 		})
 	});
-
 
 	// + GET all users and messages.
 	app.get('/api/users', function(req, res) {
@@ -140,6 +139,8 @@ module.exports = function(app) {
 		// Debugging purposes.
 		console.log(JSON.stringify(req.body, null, 4));
 
+  	io.sockets.emit('test', { data: 'hello world'});
+
 		// Message specific variables.
 		var body = ''
 		  , to   = ''
@@ -150,10 +151,19 @@ module.exports = function(app) {
 			body = req.body.Body;
 			to = req.body.To;
 			from = req.body.From;
+
+			var message = {
+				'from' : from,
+				'to'   : to,
+				'body' : body
+			};
+
+			// Push data using Socket.io to the front end.
+			io.sockets.emit('message', message);
 		} else {
 			// Else, this is a POST request from the client, an outbound SMS.
-			body = req.body.message.body;
-			to = req.body.message.to;
+			body = req.body.body;
+			to = req.body.to;
 			// from = req.body;
 			from = '+14158586858';
 
