@@ -139,8 +139,8 @@ module.exports = function(app) {
 			from = req.body.From;
 		} else {
 			// Else, this is a POST request from the client, an outbound SMS.
-			body = req.body.formData.text;
-			to = req.body.toData.text;
+			body = req.body.message.body;
+			to = req.body.message.to;
 			// from = req.body;
 			from = '+14158586858';
 

@@ -13,6 +13,8 @@ function mainController($scope, $http) {
             console.log('Error: ' + data);
         });
 
+    $scope.query = "test";
+
     // Adding a new user.
     $scope.addUser = function() {
         console.log('adding a user');
@@ -37,8 +39,9 @@ function mainController($scope, $http) {
     $scope.sendMessage = function() {
         // Make sure $scope.formData has the 'to' field.
         var postLoad = {};
-        postLoad.formData = $scope.formData;
-        postLoad.toData = $scope.toData;
+        postLoad.from = $scope.message.from;
+        postLoad.to = $scope.message.to;
+        postLoad.body = $scope.message.body;
         $http.post('/api/message', postLoad)
             .success(function(data) {
                 $('input').val('');

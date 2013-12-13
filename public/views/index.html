@@ -43,25 +43,27 @@
 				</div>
 				<!-- List of contacts/conversations. -->
 				<!-- Get all messages, but organize them by who the to/from is. -->
-				<div>
-					<ul>
-						<li ng:repeat="user in users">
-							{{user}}
-						</li>
-					</ul>
+				<div class="btn-group btn-group-vertical" data-toggle="buttons-radio">
+					<label class="btn" ng-repeat="user in users">
+						<input type="radio" name="user" ng-model="$parent.query" value="{{user.phone_number}}"> {{user.first_name}} {{user.last_name}}
+					</label>
+				</div>
+				<div id="query">
+					{{query}}
 				</div>
 			</div>
 
 			<!-- Right side, the conversation. -->
 			<div class="col-md-8">
-				<form>
+				<form ng-repeat="user in (users | filter:query | limitTo:1)">
 					<div>
-						Andy
+						{{user.first_name}}
 					</div>
 					<!-- The conversation. -->
-					<div style="height: 100%; background: blue;">
+					<div style="height: 500px;">
 		        <ul>
-					    <li ng:repeat="message in (filteredMessages = (messages | orderBy: 'created_on':false))">
+		        	<li ng-repeat="message in (user.chat | orderBy: 'created_on':false)">
+					    <!-- <li ng:repeat="message in (filteredMessages = (messages | orderBy: 'created_on':false))"> -->
 						    {{message.body}}
 						    {{message.created_on}}
 							</li>
@@ -69,7 +71,7 @@
 					</div>
 					<!-- The chat box. -->
 					<div>
-						<input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.text">
+						<input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="message.body">
 
 						<!-- sendMessage() WILL send POST to API -->
 						<button type="submit" class="btn btn-primary btn-lg" ng-click="sendMessage()">Send</button>
