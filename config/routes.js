@@ -26,18 +26,31 @@ module.exports = function(app) {
 		  , last_name = req.body.lastName
 		  , phone_number = Twilio.standardizePhoneNumber(req.body.phoneNumber);
 
-		User.create({
-			first_name: first_name,
-			last_name: last_name,
-			phone_number: phone_number
-		}, function(err, user) {
+		User.findOne({ phone_number: phone_number }, function(err, user) {
 			if (err) {
 				res.send(err);
 			};
 
-			// Load new user.
-			res.json(user);
-		});
+			// If existing user is found.
+			if (user) {
+				res.json(user);
+			} else {
+
+				// If user is not found, then create a new one.
+				User.create({
+					first_name: first_name,
+					last_name: last_name,
+					phone_number: phone_number
+				}, function(err, user) {
+					if (err) {
+						res.send(err);
+					};
+
+					// Load new user.
+					res.json(user);
+				});
+			}
+		})
 	});
 
 

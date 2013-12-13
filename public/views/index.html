@@ -35,9 +35,9 @@
 				<!-- 'Start new conversation' -->
 				<div>
 
-	        <input type="text" class="form-control input-lg text-center" placeholder="+1(240)-988-7757" ng-model="phoneNumber">
-	        <input type="text" class="form-control input-lg text-center" placeholder="Andy" ng-model="firstName">
-	        <input type="text" class="form-control input-lg text-center" placeholder="Jiang" ng-model="lastName">
+	        <input type="text" class="form-control input-lg text-center" placeholder="+1(240)-988-7757" ng-model="newUser.phoneNumber">
+	        <input type="text" class="form-control input-lg text-center" placeholder="Andy" ng-model="newUser.firstName">
+	        <input type="text" class="form-control input-lg text-center" placeholder="Jiang" ng-model="newUser.lastName">
 					<!-- Button to start new conversation. -->
 					<div class="btn btn-primary btn-lg" style="width: 100%" ng-click="addUser()">New</div>
 				</div>
@@ -56,11 +56,11 @@
 			<!-- Right side, the conversation. -->
 			<div class="col-md-8">
 				<form ng-repeat="user in (users | filter:query | limitTo:1)">
-					<div>
+					<div id="user" data-phone-number="{{user.phone_number}}">
 						{{user.first_name}}
 					</div>
 					<!-- The conversation. -->
-					<div style="height: 500px;">
+					<div style="height: 300px;">
 		        <ul>
 		        	<li ng-repeat="message in (user.chat | orderBy: 'created_on':false)">
 					    <!-- <li ng:repeat="message in (filteredMessages = (messages | orderBy: 'created_on':false))"> -->
@@ -71,7 +71,7 @@
 					</div>
 					<!-- The chat box. -->
 					<div>
-						<input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="message.body">
+						<input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="newMessage.body">
 
 						<!-- sendMessage() WILL send POST to API -->
 						<button type="submit" class="btn btn-primary btn-lg" ng-click="sendMessage()">Send</button>
