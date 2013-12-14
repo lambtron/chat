@@ -85,9 +85,14 @@
 					<div style="min-height: 300px;">
 		        <ul>
 		        	<li ng-repeat="message in (user.chat | orderBy: 'created_on':false)">
-					    <!-- <li ng:repeat="message in (filteredMessages = (messages | orderBy: 'created_on':false))"> -->
-						    {{message.body}}
-						    {{message.created_on}}
+					    <!-- If the user's number matches the 'to' vs. the 'from' -->
+					    {{user.phone_number}}, {{message.from}}
+					    	<div ng-if="angular.equals({{user.phone_number}}, {{message.from}})">
+					    		{{user.first_name}}: {{message.body}}
+					    	</div>
+					    	<div ng-if="{{user.phone_number}} == {{message.to}}">
+					    		Andy: {{message.body}}
+					    	</div>
 							</li>
 						</ul>
 					</div>
