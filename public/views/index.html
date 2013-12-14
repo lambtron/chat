@@ -29,7 +29,7 @@
 	<script src="/public/js/app.js"></script>
 	<script src="/public/js/services.js"></script>
 	<script src="/public/js/controllers.js"></script>
-
+	<script src="/public/js/directives.js"></script>
 
 	<!-- jQuery -->
 	<script src="/public/js/index.js"></script>
@@ -68,16 +68,19 @@
 				<br>
 				<!-- List of contacts/conversations. -->
 				<!-- Get all messages, but organize them by who the to/from is. -->
-				<div class="btn-group btn-group-vertical" style="width: 100%">
+				<buttons-radio class='btn-group btn-group-vertical' style='width: 100%' data-toggle='buttons-radio' model='selectedUser' options='users'>
+				</buttons-radio>
+				{{selectedUser.phone_number}}
+				<!-- <div class="btn-group btn-group-vertical" style="width: 100%">
 					<label class="btn btn-large users" ng-repeat="user in users">
 						<input type="radio" name="user" ng-model="$parent.query" value="{{user.phone_number}}" style="display: none"> {{user.first_name}} {{user.last_name}}
 					</label>
-				</div>
+				</div> -->
 			</div>
 
 			<!-- Right side, the conversation. -->
 			<div class="col-md-8">
-				<form ng-repeat="user in (users | filter:query | limitTo:1)">
+				<form ng-repeat="user in (users | filter:selectedUser.phone_number | limitTo:1)">
 					<div id="user" data-phone-number="{{user.phone_number}}">
 						{{user.first_name}}
 					</div>
