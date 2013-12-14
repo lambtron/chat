@@ -9,7 +9,6 @@ chatView.directive('buttonsRadio', function() {
 		link: function($scope, element, attr) {
 			$scope.activate = function(idx) {
 				$scope.model = $scope.options[idx];
-				console.log(attr);
 			};
 		},
 		template:	"<button type='button' class='btn btn-info'" +
@@ -20,6 +19,20 @@ chatView.directive('buttonsRadio', function() {
 							"</button>"
 	};
 });
+
+
+		    //     <ul>
+		    //     	<li ng-repeat="message in (user.chat | orderBy: 'created_on':false)">
+					 //    <!-- If the user's number matches the 'to' vs. the 'from' -->
+					 //    {{user.phone_number}}, {{message.from}}
+					 //    	<div ng-if="angular.equals({{user.phone_number}}, {{message.from}})">
+					 //    		{{user.first_name}}: {{message.body}}
+					 //    	</div>
+					 //    	<div ng-if="{{user.phone_number}} == {{message.to}}">
+					 //    		Andy: {{message.body}}
+					 //    	</div>
+						// 	</li>
+						// </ul>
 
 
 

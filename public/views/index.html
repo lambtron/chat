@@ -24,7 +24,7 @@
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="/public/js/app.js"></script>
 	<script src="/public/js/services.js"></script>
@@ -48,63 +48,57 @@
 					<button id="new-user" class="btn btn-default btn-lg dropdown-toggle" style="width: 100%" data-toggle="dropdown">
 						New
 					</button>
-					<ul class="dropdown-menu" style="width: 100%" role="menu">
-		        <li>
+					<div class="dropdown-menu" style="width: 100%" role="menu">
+		        <div>
 		        	<input type="text" class="form-control input-lg text-center" placeholder="Phone number" ng-model="newUser.phoneNumber">
-		        </li>
-		        <li>
+		        </div>
+		        <div>
 		        	<input type="text" class="form-control input-lg text-center" placeholder="First name" ng-model="newUser.firstName">
-		        </li>
-		        <li>
+		        </div>
+		        <div>
 		        	<input type="text" class="form-control input-lg text-center" placeholder="Last name" ng-model="newUser.lastName">
-		        </li>
-		        <li class="divider"></li>
+		        </div>
+		        <div class="divider"></div>
 						<!-- Button to start new conversation. -->
-						<li>
+						<div>
 							<div class="btn btn-primary btn-lg" style="width: 100%" ng-click="addUser()">Add</div>
-						</li>
-					</ul>
+						</div>
+					</div>
 				</div>
 				<br>
 				<!-- List of contacts/conversations. -->
 				<!-- Get all messages, but organize them by who the to/from is. -->
 				<buttons-radio class='btn-group btn-group-vertical' style='width: 100%' data-toggle='buttons-radio' model='selectedUser' options='users'>
 				</buttons-radio>
-				{{selectedUser.phone_number}}
-				<!-- <div class="btn-group btn-group-vertical" style="width: 100%">
-					<label class="btn btn-large users" ng-repeat="user in users">
-						<input type="radio" name="user" ng-model="$parent.query" value="{{user.phone_number}}" style="display: none"> {{user.first_name}} {{user.last_name}}
-					</label>
-				</div> -->
 			</div>
 
 			<!-- Right side, the conversation. -->
-			<div class="col-md-8">
+			<div class="col-md-8" style="height: 100%">
 				<form ng-repeat="user in (users | filter:selectedUser.phone_number | limitTo:1)">
 					<div id="user" data-phone-number="{{user.phone_number}}">
-						{{user.first_name}}
+						<!-- {{user.first_name}} -->
 					</div>
 					<!-- The conversation. -->
-					<div style="min-height: 300px;">
+					<div style="height: 100%;">
 		        <ul>
 		        	<li ng-repeat="message in (user.chat | orderBy: 'created_on':false)">
 					    <!-- If the user's number matches the 'to' vs. the 'from' -->
-					    {{user.phone_number}}, {{message.from}}
-					    	<div ng-if="angular.equals({{user.phone_number}}, {{message.from}})">
-					    		{{user.first_name}}: {{message.body}}
+					    	<div ng-if="user.phone_number == message.from">
+					    		<strong>{{user.first_name}}</strong>: {{message.body}}
 					    	</div>
-					    	<div ng-if="{{user.phone_number}} == {{message.to}}">
-					    		Andy: {{message.body}}
+					    	<div ng-if="user.phone_number == message.to">
+					    		<strong>Andy</strong>: {{message.body}}
 					    	</div>
 							</li>
 						</ul>
 					</div>
 					<!-- The chat box. -->
-					<div>
-						<input id="message-body" type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="newMessage.body">
-
+					<div class="col-md-10" style="margin: 0; padding: 0">
+						<input id="message-body" type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" style="text-align: left" ng-model="newMessage.body">						
+					</div>
+					<div class="col-md-2" style="margin: 0; padding: 0">
 						<!-- sendMessage() WILL send POST to API -->
-						<button type="submit" class="btn btn-primary btn-lg" ng-click="sendMessage()">Send</button>
+						<button type="submit" class="btn btn-primary btn-lg" style="width: 100%" ng-click="sendMessage()">Send</button>
 					</div>
 				</form>
 			</div>
