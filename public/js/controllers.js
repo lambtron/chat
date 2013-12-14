@@ -43,9 +43,10 @@ chatView.controller('mainController', ['$scope', '$http', 'socket', function($sc
         postLoad.body = $scope.newMessage.body;
         $http.post('/api/message', postLoad)
             .success(function(data) {
-                $('input').val('');
-                $scope.messages = data;
-                console.log(data);
+                $scope.newMessage.body = '';
+                $('input#message-body').val('');
+                // Manually update the chat box. TODO.
+                $scope.users = data;
             })
             .error(function(data) {
                 console.log('Error: ' + data);
@@ -65,8 +66,8 @@ chatView.controller('mainController', ['$scope', '$http', 'socket', function($sc
     };
 
     // Receiving data from server and pushing to front-end.
-    socket.on('message', function(data) {
-        // $scope.messages = data;
+    socket.on('users', function(data) {
+        $scope.users = data;
         console.log('we are receiving an inbound SMS from Twilio.');
         console.log(data);
     });

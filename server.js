@@ -22,12 +22,6 @@ app.use(express.bodyParser());
 // Routes ==========================================================================================
 require('./config/routes.js')(app, io);
 
-// TESTING PURPOSES.
-// app.post('/test', function(req, res) {
-// 	console.log('received post request');
-// 	io.sockets.emit('news', {data: 'hello world'});
-// });
-
 // Application route =============================================================================
 app.get('*', function(req, res) {
 	// Load the single view file (Angular will handle the page changes).

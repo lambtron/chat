@@ -34,20 +34,11 @@ var UserSchema = new Schema({
 });
 
 /**
- * Validations
- */
-// ArticleSchema.path('title').validate(function(title) {
-//     return title.length;
-// }, 'Title cannot be blank');
-
-/**
  * Statics
  */
 UserSchema.statics = {
-    load: function(id, cb) {
-        this.findOne({
-            _id: id
-        }).populate('first_name', 'first_name').exec(cb);
+    getAllUsers: function(cb) {
+        return this.find().exec(cb);
     }
 };
 

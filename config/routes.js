@@ -55,66 +55,10 @@ module.exports = function(app, io) {
 
 	// + GET all users and messages.
 	app.get('/api/users', function(req, res) {
-		// Get the self phone number from req.
-		// var my_phone_number = req.body.my_phone_number;
-		var my_phone_number = '+14158586858';
-
-		// Use Mongoose to get all of the messages in the database.
-		// Only get the Messages in Mongodb where the 'from' or 'to' matches your Twilio number.
-		Message.find({ $or: [ {'to': my_phone_number}, {'from': my_phone_number} ] },
-			function(err, messages) {
-
-  		// Create an array of all the phone numbers across all messages.
-  		var phone_numbers = [];
-  		for (var i = messages.length - 1; i >= 0; i--) {
-  			if (!_.contains(phone_numbers, Twilio.standardizePhoneNumber(messages[i].to)))
-  				phone_numbers.push(Twilio.standardizePhoneNumber(messages[i].to));
-  			if (!_.contains(phone_numbers, Twilio.standardizePhoneNumber(messages[i].from)))
-  				phone_numbers.push(Twilio.standardizePhoneNumber(messages[i].from));
-  		};
-
-  		// Transform array to array of objects.
-  		// Array must be in this format:
-			// [ {phone_number: '+12409887757'}, ... ]
-			var arr = [];
-  		for( var i = phone_numbers.length -1; i>=0; i--) {
-  			var obj = {};
-  			obj.phone_number = phone_numbers[i];
-  			arr.push(obj);
-  		};
-
-  		// Retrieve all users that have conversations.
-  		// Get users where the phone number matches any of the phone numbers in the array.
-  		var query = User.find({});
-			query.or(arr);
-  		query.exec(function(err, users) {
-  			if (err) {
-  				res.send(err);
-  			};
-  			// If no users were returned, then we have to return empty data.
-  			// TODO.
-
-  			// With the array of users, turn to this kind of data structure:
-  			// Make a new array from messages, where the user.phone_number is either 
-				// the to or the from field
-				var new_users = JSON.parse(JSON.stringify(users));
-
-  			for(var i=new_users.length-1; i>=0; i--) {
-  				var chat = [];
-  				new_users[i].chat = [];
-  				for(var j=messages.length-1; j>=0; j--) {
-  					if (new_users[i].phone_number == messages[j].to ||
-  						new_users[i].phone_number == messages[j].from) {
-  						chat.push(messages[j]);
-  					};
-  				};
-  				new_users[i].chat = chat;
-  			};
-
-  			// console.log(JSON.stringify(new_users, null, 2));
-
-  			res.json(new_users);
-  		});
+		User.getAllUsers(function(err, users) {
+			Message.getMessagesFromUsers(users, function(err, data) {
+				res.json(data);
+			});
 		});
 	});
 
@@ -138,8 +82,7 @@ module.exports = function(app, io) {
 	app.post('/api/message', function(req, res) {
 		// Debugging purposes.
 		console.log(JSON.stringify(req.body, null, 4));
-
-  	io.sockets.emit('test', { data: 'hello world'});
+		var my_phone_number = '+14158586858';
 
 		// Message specific variables.
 		var body = ''
@@ -151,21 +94,12 @@ module.exports = function(app, io) {
 			body = req.body.Body;
 			to = req.body.To;
 			from = req.body.From;
-
-			var message = {
-				'from' : from,
-				'to'   : to,
-				'body' : body
-			};
-
-			// Push data using Socket.io to the front end.
-			io.sockets.emit('message', message);
 		} else {
 			// Else, this is a POST request from the client, an outbound SMS.
 			body = req.body.body;
 			to = req.body.to;
 			// from = req.body;
-			from = '+14158586858';
+			from = my_phone_number;
 
 			// Send POST request to Twilio to initate outbound SMS.
 			// To, From, Body
@@ -183,13 +117,18 @@ module.exports = function(app, io) {
 				res.send(err);
 			};
 
-			// Load all new messages.
-			Message.find({ $or: [ {'to': '+14158586858'}, {'from': '+14158586858'} ] },
-				function(err, messages) {
-				if (err) {
-					res.send(err);
-				};
-				res.json(messages);
+			User.getAllUsers(function(err, users) {
+				Message.getMessagesFromUsers(users, function(err, data) {
+					if(typeof req.body.MessageSid !== 'undefined') {
+						io.sockets.emit('users', data);
+					} else {
+						console.log('send to front end');
+						if (err) {
+							res.json(err);
+						};
+						res.json(data);
+					};
+				});
 			});
 		});
 	});
