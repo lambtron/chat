@@ -1,3 +1,5 @@
+'use strict';
+
 // Initialize server ===============================================================================
 var express = require('express')
   , app = express()

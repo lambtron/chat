@@ -1,7 +1,5 @@
 'use strict';
 
-(function(){
-
 // var Message = require('./fdsaf')
 // Message.derp;
 
@@ -94,5 +92,3 @@ MessageSchema.statics = {
 };
 
 mongoose.model('Message', MessageSchema);
-
-}());

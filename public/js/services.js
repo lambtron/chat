@@ -1,3 +1,5 @@
+'use strict';
+
 // Services.
 
 // Socket.io wrapper.

@@ -1,3 +1,5 @@
+'use strict';
+
 chatView.controller('mainController', ['$scope', '$http', 'socket', function($scope, $http, socket)
 {
     // Initialize variables needed.

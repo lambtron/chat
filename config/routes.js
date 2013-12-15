@@ -1,13 +1,16 @@
+'use strict';
+
+(function() {
 /**
  * Import all models ===============================================================================
  */
-require('../app/models/message.js');
-require('../app/models/user.js');
+require('../app/models/message');
+require('../app/models/user');
 
 /**
- * Import controllers ==============================================================================
+ * Import helpers ==================================================================================
  */
-var Twilio = require('../app/controllers/twilio.js');
+var Twilio = require('../app/helpers/twilio');
 
 /**
  * Module dependencies =============================================================================
@@ -17,6 +20,7 @@ var mongoose = require('mongoose')
 	, User = mongoose.model('User')
 	, _ = require('underscore');
 
+// Public functions. ===============================================================================
 module.exports = function(app, io) {
 	// API routes for Message model ==================================================================
 
@@ -158,3 +162,5 @@ module.exports = function(app, io) {
 		res.sendfile('index.html', {'root': './public/views/'});
 	});
 };
+
+}());
