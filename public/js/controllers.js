@@ -6,12 +6,9 @@ chatView.controller('mainController', ['$scope', '$http', 'socket', function($sc
     $scope.newUser = {};
     $scope.newMessage = {};
 
-    $scope.myOptions = ["Left", "Middle", "Right"];
-
     // Set SelectedUser as the one with the most recent message to you.
     // Order users by last message created on (should be done in Routes.js)
 
-    // $scope.messages.isSender 
 
     // When landing on the page, get all chats and a few pieces of each chat history.
     // You need to access the Nodejs API here.

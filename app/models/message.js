@@ -61,8 +61,7 @@ MessageSchema.statics = {
             var obj2 = {};
             obj.to = userArray[i].phone_number;
             obj2.from = userArray[i].phone_number;
-            arr.push(obj);
-            arr.push(obj2);
+            arr.push(obj, obj2);
         };
 
         // Retrieve all messages where either the 'to' or the 'from' matches any phone numbers in

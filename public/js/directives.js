@@ -21,3 +21,5 @@ chatView.directive('buttonsRadio', function() {
 							"</button>"
 	};
 });
+
+// Filter by last updated.

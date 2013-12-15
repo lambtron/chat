@@ -1,9 +1,7 @@
-- figure out how to propoerly manage the linking of mondels in the routes.js file
-- push new inbound SMS to the front end.
 - figure out the data structure for reconciling no User but with messages.
-- need to make sure that the new data structure is loading properly on the front end
 - write a function that will remove duplicates in the users model.
 - what data needed to be refreshed? messages? users? can i only refresh messages?
 - namespacing for the socket.io (only send data to the 'to' client)
 - manually update the front end when user sends text messages.
 - when receive websocket request and it is not showing, then show a notification.
+- when 'ADD NEW USER" adds weird shit to the front end.

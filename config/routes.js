@@ -121,17 +121,26 @@ module.exports = function(app, io) {
 				res.send(err);
 			};
 
-			User.getAllUsers(function(err, users) {
-				Message.getMessagesFromUsers(users, function(err, data) {
-					if(typeof req.body.MessageSid !== 'undefined') {
-						io.sockets.emit('users', data);
-					} else {
-						console.log('send to front end');
-						if (err) {
-							res.json(err);
+			// Form array to hold phone numbers.
+			var arr = [];
+			arr.push(to, body);
+
+			User.refreshLastUpdatedOn(arr, function(err, data) {
+				console.log('updated records ' + data);
+
+				// Retrieve Users data and send it back to the front end.
+				User.getAllUsers(function(err, users) {
+					Message.getMessagesFromUsers(users, function(err, data) {
+						if(typeof req.body.MessageSid !== 'undefined') {
+							io.sockets.emit('users', data);
+						} else {
+							console.log('send to front end');
+							if (err) {
+								res.json(err);
+							};
+							res.json(data);
 						};
-						res.json(data);
-					};
+					});
 				});
 			});
 		});

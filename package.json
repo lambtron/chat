@@ -15,10 +15,11 @@
     "dependencies": {
         "express": "3.x",
         "jade": "latest",
-        "mongoose": "latest",
+        "mongoose": "2.x",
         "bower": "latest",
         "underscore": "latest",
         "twilio": "latest",
-        "socket.io": "latest"
+        "socket.io": "latest",
+        "moment": "latest"
     }
 }
