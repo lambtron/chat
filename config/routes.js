@@ -123,10 +123,18 @@ module.exports = function(app, io) {
 
 			// Form array to hold phone numbers.
 			var arr = [];
-			arr.push(to, body);
+			arr.push(to, from);
+
+			arr = _.without(arr, my_phone_number);
+
+			console.log(arr);
 
 			User.refreshLastUpdatedOn(arr, function(err, data) {
 				console.log('updated records ' + data);
+
+				if (err) {
+					res.json(err);
+				};
 
 				// Retrieve Users data and send it back to the front end.
 				User.getAllUsers(function(err, users) {

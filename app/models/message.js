@@ -7,7 +7,8 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+    Schema = mongoose.Schema,
+    _ = require('underscore');
 
 /**
  * Message Schema
@@ -73,7 +74,8 @@ MessageSchema.statics = {
                 console.log(err);
             };
 
-            var new_users = JSON.parse(JSON.stringify(userArray));
+            var new_users = _.sortBy(JSON.parse(JSON.stringify(userArray)), function(obj){ return obj.last_updated_on; }).reverse();
+
             for (var i = new_users.length - 1; i >= 0; i-- ) {
                 var chat = [];
                 new_users[i].chat = [];
