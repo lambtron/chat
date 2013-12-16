@@ -46,6 +46,7 @@ module.exports = function(app, io) {
 					});
 				});
 			} else {
+				console.log('making new user');
 
 				// If user is not found, then create a new one.
 				User.create({
@@ -151,17 +152,32 @@ module.exports = function(app, io) {
 							res.send(err);
 						};
 
-						console.log('routes.js 154: successfully created a user.')
-
 						// After create user, return all Users.
-						returnAll(to, from, req, res, io);
+						returnAll(to, from, function(err, data) {
+							console.log('sending from server 1:');
+							console.log(data);
+							if(typeof req.body.MessageSid !== 'undefined') {
+								io.sockets.emit('users', data);
+							} else {
+								res.json(data);
+							};
+						});
+
 					});
 				} else {
 					// If user exists.
 					
 					// Return all users.
 					// Form array to hold phone numbers.
-					returnAll(to, from, req, res, io);
+					returnAll(to, from, function(err, data) {
+						console.log('sending from server 2:');
+						console.log(data);
+						if(typeof req.body.MessageSid !== 'undefined') {
+							io.sockets.emit('users', data);
+						} else {
+							res.json(data);
+						};
+					});
 				};
 			});
 		});
@@ -194,37 +210,16 @@ module.exports = function(app, io) {
 };
 
 // Private functions. ==============================================================================
-function returnAll(to, from, req, res, io) {
+function returnAll(to, from, cb) {
 	var arr = [];
 	arr.push(to, from);
 	arr = _.without(arr, my_phone_number);
 
-	console.log('route.js 202: array of phone numbers (this should be 240):');
-	console.log(arr);
-
 	User.refreshLastUpdatedOn(arr, function(err, data) {
-		if (err) {
-			res.json(err);
-		};
-
-		console.log('routes.js 210: refreshed user with new last updated on. should be something.');
-		console.log(data);
-
 		// Retrieve Users data and send it back to the front end.
 		User.getAllUsers(function(err, users) {
-
-			console.log('route.js 216: users. should incl 240.');
-			console.log(users);
-
 			Message.getMessagesFromUsers(users, function(err, data) {
-				if(typeof req.body.MessageSid !== 'undefined') {
-					io.sockets.emit('users', data);
-				} else {
-					if (err) {
-						res.json(err);
-					};
-					res.json(data);
-				};
+				cb(err, data);
 			});
 		});
 	});

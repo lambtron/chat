@@ -24,6 +24,7 @@ chatView.controller('mainController', ['$scope', '$http', 'socket', function($sc
 
     // Adding a new user.
     $scope.addUser = function() {
+        console.log('this is working');
         var postLoad = {}
         postLoad.firstName = $scope.newUser.firstName;
         postLoad.lastName = $scope.newUser.lastName;
@@ -53,6 +54,8 @@ chatView.controller('mainController', ['$scope', '$http', 'socket', function($sc
                 $('input#message-body').val('');
                 // Manually update the chat box. TODO.
                 $scope.users = data;
+                console.log('new data: ' + data);
+                console.log('message received');
             })
             .error(function(data) {
                 console.log('Error: ' + data);
