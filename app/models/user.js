@@ -47,7 +47,7 @@ UserSchema.statics = {
     },
     refreshLastUpdatedOn: function(arr, cb) {
         var new_arr = [];
-        for (var i = arr.length - 1; i >= 0; i--) {
+        for (var i = 0; i < arr.length; i++) {
             var obj = {};
             obj.phone_number = arr[i];
             new_arr.push(obj);
@@ -59,8 +59,6 @@ UserSchema.statics = {
         // the array.
         var query = this.find({});
         query.or(new_arr);
-        console.log('query:')
-        console.log(query);
         return query.update( {last_updated_on: new_date}).exec(cb);
     }
 }

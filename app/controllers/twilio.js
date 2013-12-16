@@ -10,8 +10,10 @@ module.exports = {
             body: body
         }, function(err, responseData) {
             if (!err) {
-                console.log(responseData);
-            };
+                // console.log(responseData);
+            } else {
+                console.log('Twilio error: ' + err);
+            }
         });
     },
     standardizePhoneNumber: function(phone_number) {

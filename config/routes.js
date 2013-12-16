@@ -18,6 +18,7 @@ var Twilio = require('../app/helpers/twilio');
 var mongoose = require('mongoose')
 	, Message = mongoose.model('Message')
 	, User = mongoose.model('User')
+	, my_phone_number = process.env.TWILIO_PHONE_NUMBER // Think about encapsulating this somewhere in the app level.
 	, _ = require('underscore');
 
 // Public functions. ===============================================================================
@@ -37,7 +38,13 @@ module.exports = function(app, io) {
 
 			// If existing user is found.
 			if (user) {
-				res.json(user);
+
+				// Need to return all users.
+				User.getAllUsers(function(err, users) {
+					Message.getMessagesFromUsers(users, function(err, data) {
+						res.json(data);
+					});
+				});
 			} else {
 
 				// If user is not found, then create a new one.
@@ -50,11 +57,16 @@ module.exports = function(app, io) {
 						res.send(err);
 					};
 
+					// Need to return all users.
 					// Load new user.
-					res.json(user);
+					User.getAllUsers(function(err, users) {
+						Message.getMessagesFromUsers(users, function(err, data) {
+							res.json(data);
+						});
+					});
 				});
-			}
-		})
+			};
+		});
 	});
 
 	// + GET all users and messages.
@@ -68,8 +80,6 @@ module.exports = function(app, io) {
 
 	// Get messages.
 	app.get('/api/messages', function(req, res) {
-		var my_phone_number = '+14158586858';
-
 		// Use Mongoose to get all of the messages in the database.
 		// Only get the Messages in Mongodb where the 'from' or 'to' matches your Twilio number.
 		Message.find({ $or: [ {'to': my_phone_number}, {'from': my_phone_number} ] },
@@ -85,8 +95,10 @@ module.exports = function(app, io) {
 	// Create a Message and send back all Messages.
 	app.post('/api/message', function(req, res) {
 		// Debugging purposes.
-		console.log(JSON.stringify(req.body, null, 4));
-		var my_phone_number = '+14158586858';
+		// console.log(JSON.stringify(req.body, null, 4));
+
+		// When a new message is created, we need to add a new user with the phone number as the first
+		// name and black as last name.
 
 		// Message specific variables.
 		var body = ''
@@ -121,35 +133,36 @@ module.exports = function(app, io) {
 				res.send(err);
 			};
 
-			// Form array to hold phone numbers.
-			var arr = [];
-			arr.push(to, from);
-
-			arr = _.without(arr, my_phone_number);
-
-			console.log(arr);
-
-			User.refreshLastUpdatedOn(arr, function(err, data) {
-				console.log('updated records ' + data);
-
+			// Check if there is a user with this phone number. If no user, create one.
+			User.findOne({ phone_number: from }, function(err, user) {
 				if (err) {
-					res.json(err);
+					res.send(err);
 				};
 
-				// Retrieve Users data and send it back to the front end.
-				User.getAllUsers(function(err, users) {
-					Message.getMessagesFromUsers(users, function(err, data) {
-						if(typeof req.body.MessageSid !== 'undefined') {
-							io.sockets.emit('users', data);
-						} else {
-							console.log('send to front end');
-							if (err) {
-								res.json(err);
-							};
-							res.json(data);
+				// If no existing user is found.
+				if (!user && (from != my_phone_number)) {
+					// Then create a new one.
+					User.create({
+						first_name: from,
+						last_name: '',
+						phone_number: from
+					}, function(err, user) {
+						if (err) {
+							res.send(err);
 						};
+
+						console.log('routes.js 154: successfully created a user.')
+
+						// After create user, return all Users.
+						returnAll(to, from, req, res, io);
 					});
-				});
+				} else {
+					// If user exists.
+					
+					// Return all users.
+					// Form array to hold phone numbers.
+					returnAll(to, from, req, res, io);
+				};
 			});
 		});
 	});
@@ -177,6 +190,43 @@ module.exports = function(app, io) {
 	app.get('*', function(req, res) {
 		// Load the single view file (Angular will handle the page changes).
 		res.sendfile('index.html', {'root': './public/views/'});
+	});
+};
+
+// Private functions. ==============================================================================
+function returnAll(to, from, req, res, io) {
+	var arr = [];
+	arr.push(to, from);
+	arr = _.without(arr, my_phone_number);
+
+	console.log('route.js 202: array of phone numbers (this should be 240):');
+	console.log(arr);
+
+	User.refreshLastUpdatedOn(arr, function(err, data) {
+		if (err) {
+			res.json(err);
+		};
+
+		console.log('routes.js 210: refreshed user with new last updated on. should be something.');
+		console.log(data);
+
+		// Retrieve Users data and send it back to the front end.
+		User.getAllUsers(function(err, users) {
+
+			console.log('route.js 216: users. should incl 240.');
+			console.log(users);
+
+			Message.getMessagesFromUsers(users, function(err, data) {
+				if(typeof req.body.MessageSid !== 'undefined') {
+					io.sockets.emit('users', data);
+				} else {
+					if (err) {
+						res.json(err);
+					};
+					res.json(data);
+				};
+			});
+		});
 	});
 };
 
