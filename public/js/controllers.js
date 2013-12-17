@@ -16,7 +16,7 @@ chatView.controller('mainController', ['$scope', '$http', 'socket', function($sc
     $http.get('/api/users')
         .success(function(data) {
             $scope.users = data;
-            console.log(data);
+            // console.log(data);
         })
         .error(function(data) {
             console.log('Error: ' + data);
@@ -64,7 +64,7 @@ chatView.controller('mainController', ['$scope', '$http', 'socket', function($sc
         $http.delete('/api/message/' + id)
             .success(function(data) {
                 $scope.messages = data;
-                console.log(data);
+                // console.log(data);
             })
             .error(function(data) {
                 console.log('Error: ' + data);
@@ -74,7 +74,7 @@ chatView.controller('mainController', ['$scope', '$http', 'socket', function($sc
     // Receiving data from server and pushing to front-end.
     socket.on('users', function(data) {
         $scope.users = data;
-        console.log('we are receiving an inbound SMS from Twilio.');
-        console.log(data);
+        // console.log('we are receiving an inbound SMS from Twilio.');
+        // console.log(data);
     });
 }]);

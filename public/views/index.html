@@ -92,13 +92,16 @@
 							</li>
 						</ul>
 					</div>
-					<!-- The chat box. -->
-					<div class="col-md-10" style="margin: 0; padding: 0">
-						<input id="message-body" type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" style="text-align: left" ng-model="newMessage.body">						
-					</div>
-					<div class="col-md-2" style="margin: 0; padding: 0">
-						<!-- sendMessage() WILL send POST to API -->
-						<button type="submit" class="btn btn-primary btn-lg" style="width: 100%" ng-click="sendMessage()">Send</button>
+					<div class="col-md-8" style="position: fixed; bottom: 50px; right: 0; padding: 0 50px;">
+						<!-- The chat box. -->
+						<div class="col-md-10" style="margin: 0; padding: 0;">
+							<input id="message-body" type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" style="text-align: left" ng-model="newMessage.body">
+						</div>
+						<div class="col-md-2" style="margin: 0; padding: 0">
+							<!-- sendMessage() WILL send POST to API -->
+							<button type="submit" class="btn btn-primary btn-lg" style="width: 100%" ng-click="sendMessage()">Send</button>
+						</div>
+					<div style="clear:both">
 					</div>
 				</form>
 			</div>
