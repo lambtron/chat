@@ -24,7 +24,6 @@ chatView.controller('mainController', ['$scope', '$http', 'socket', function($sc
 
     // Adding a new user.
     $scope.addUser = function() {
-        console.log('this is working');
         var postLoad = {}
         postLoad.firstName = $scope.newUser.firstName;
         postLoad.lastName = $scope.newUser.lastName;
