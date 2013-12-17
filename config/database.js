@@ -2,7 +2,7 @@
 
 // Server is going to retrieve database.url.
 
-var mongo = require('mongodb');
+// var mongo = require('mongodb');
 
 var mongoUri = process.env.MONGOLAB_URI ||
   process.env.MONGOHQ_URL ||
