@@ -10,6 +10,17 @@ chatView.controller('mainController', ['$scope', '$http', 'socket', function($sc
   // Set SelectedUser as the one with the most recent message to you.
   // Order users by last message created on (should be done in Routes.js)
 
+  // Delete all by pressing this button.
+  $scope.deleteAll = function() {
+    console.log('deleting');
+    $http.delete('/api')
+      .success(function(data) {
+        $scope.users = data;
+      })
+      .error(function(data) {
+        console.log('Error: ' + data);
+      });
+  };
 
   // When landing on the page, get all chats and a few pieces of each chat history.
   // You need to access the Nodejs API here.

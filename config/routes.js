@@ -27,14 +27,20 @@ module.exports = function(app, io) {
 	// API routes for Message model ==================================================================
 
 	// * DELETE (removes all users and messages)
-	app.delete('/api/', function(req, res) {
-		User.remove({});
-		Message.remove({});
-		res.send(200);
+	app.delete('/api', function(req, res) {
+		User.remove({}, function(err) {
+			console.log('Users removed.');
+		});
+		Message.remove({}, function(err) {
+			console.log('Messages removed.');
+		});
+		res.send({},200);
 	});
 
 	// * POST, add new user to mongodb.
 	app.post('/api/user', function(req, res) {
+		console.log(req.body);
+
 		var first_name = req.body.firstName
 		  , last_name = req.body.lastName
 		  , phone_number = Twilio.standardizePhoneNumber(req.body.phoneNumber);
@@ -54,8 +60,6 @@ module.exports = function(app, io) {
 					});
 				});
 			} else {
-				console.log('making new user');
-
 				// If user is not found, then create a new one.
 				User.create({
 					first_name: first_name,
