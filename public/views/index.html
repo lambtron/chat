@@ -104,7 +104,11 @@
 							<!-- sendMessage() WILL send POST to API -->
 							<button type="submit" class="btn btn-primary btn-lg" style="width: 100%" ng-click="sendMessage()">Send</button>
 						</div>
-					<div style="clear:both">
+			      <select ng-model="phoneNumbers.from" ng-options="number as number for number in phoneNumbers.numbers">
+			      </select>
+			      {{phoneNumber.from}}
+						<div style="clear:both">
+						</div>
 					</div>
 				</form>
 			</div>

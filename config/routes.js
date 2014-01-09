@@ -20,6 +20,7 @@ var mongoose = require('mongoose')
 	, Message = mongoose.model('Message')
 	, User = mongoose.model('User')
 	, my_phone_number = process.env.TWILIO_PHONE_NUMBER // Think about encapsulating this somewhere in the app level.
+	, my_phone_numbers = process.env.TWILIO_PHONE_NUMBERS
 	, _ = require('underscore');
 
 // Public functions. ===============================================================================
@@ -127,8 +128,7 @@ module.exports = function(app, io) {
 			// Else, this is a POST request from the client, an outbound SMS.
 			body = req.body.body;
 			to = req.body.to;
-			// from = req.body;
-			from = my_phone_number;
+			from = req.body.from;
 
 			// Send POST request to Twilio to initate outbound SMS.
 			// To, From, Body
@@ -152,8 +152,12 @@ module.exports = function(app, io) {
 					res.send(err);
 				};
 
+				console.log(my_phone_numbers);
+				console.log(from);
+				console.log(_.indexOf(my_phone_numbers, from));
+
 				// If no existing user is found.
-				if (!user && (from != my_phone_number)) {
+				if (!user && (_.indexOf(my_phone_numbers, from) != -1)) {
 					// Then create a new one.
 					User.create({
 						first_name: from,
@@ -221,7 +225,7 @@ module.exports = function(app, io) {
 function returnAll(to, from, cb) {
 	var arr = [];
 	arr.push(to, from);
-	arr = _.without(arr, my_phone_number);
+	arr = _.without(arr, my_phone_numbers);
 
 	User.refreshLastUpdatedOn(arr, function(err, data) {
 		if (err) {

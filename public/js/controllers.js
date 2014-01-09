@@ -7,6 +7,14 @@ chatView.controller('mainController', ['$scope', '$http', 'socket', function($sc
   $scope.newMessage = {};
   $scope.selectedUser = '';
 
+  var phoneNumbers = $scope.phoneNumbers = {
+    numbers: [
+      '+14158586858',
+      '+15108580912',
+      '+16507795278'
+    ],
+    from: '+14158586858'
+  }
   // Set SelectedUser as the one with the most recent message to you.
   // Order users by last message created on (should be done in Routes.js)
 
@@ -58,9 +66,12 @@ chatView.controller('mainController', ['$scope', '$http', 'socket', function($sc
   // and to save it to MongoDB.
   $scope.sendMessage = function() {
     var postLoad = {};
-    // postLoad.from = newMessage.from;
     postLoad.to = $('#user').attr('data-phone-number');
     postLoad.body = $scope.newMessage.body;
+    postLoad.from = phoneNumbers.from;
+
+    console.log(postLoad);
+
     $http.post('/api/message', postLoad)
       .success(function(data) {
         $scope.newMessage.body = '';
