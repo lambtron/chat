@@ -35,6 +35,7 @@ chatView.controller('mainController', ['$scope', '$http', 'socket', function($sc
   // Load only the Messages where your number is either the 'to' or the 'from'.
   $http.get('/api/users')
     .success(function(data) {
+      console.log(data);
       $scope.users = data;
       $scope.selectedUser = data[0].phone_number;
       // Also need to active.
