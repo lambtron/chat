@@ -64,10 +64,6 @@ MessageSchema.statics = {
             obj2.from = userArray[i].phone_number;
             arr.push(obj, obj2);
         };
-<<<<<<< HEAD
-
-=======
->>>>>>> 5bba8a8f7c9776244dbd2d91151a32c9c07dec89
         // Message has not yet been created, so no message will be retrieved.
 
         // Retrieve all messages where either the 'to' or the 'from' matches any phone numbers in
@@ -78,10 +74,7 @@ MessageSchema.statics = {
             if(err) {
                 console.log(err);
             };
-<<<<<<< HEAD
 
-=======
->>>>>>> 5bba8a8f7c9776244dbd2d91151a32c9c07dec89
             var new_users = _.sortBy(JSON.parse(JSON.stringify(userArray)), function(obj){ 
                 return obj.last_updated_on; }).reverse();
 

@@ -25,6 +25,13 @@ var mongoose = require('mongoose')
 module.exports = function(app, io) {
 	// API routes for Message model ==================================================================
 
+	// * DELETE (removes all users and messages)
+	app.delete('/api/', function(req, res) {
+		User.remove({});
+		Message.remove({});
+		res.send(200);
+	});
+
 	// * POST, add new user to mongodb.
 	app.post('/api/user', function(req, res) {
 		var first_name = req.body.firstName
@@ -154,8 +161,6 @@ module.exports = function(app, io) {
 
 						// After create user, return all Users.
 						returnAll(to, from, function(err, data) {
-							console.log('sending from server 1:');
-							console.log(data);
 							if(typeof req.body.MessageSid !== 'undefined') {
 								io.sockets.emit('users', data);
 							} else {
@@ -170,8 +175,6 @@ module.exports = function(app, io) {
 					// Return all users.
 					// Form array to hold phone numbers.
 					returnAll(to, from, function(err, data) {
-						console.log('sending from server 2:');
-						console.log(data);
 						if(typeof req.body.MessageSid !== 'undefined') {
 							io.sockets.emit('users', data);
 						} else {
@@ -216,18 +219,11 @@ function returnAll(to, from, cb) {
 	arr = _.without(arr, my_phone_number);
 
 	User.refreshLastUpdatedOn(arr, function(err, data) {
-<<<<<<< HEAD
 		if (err) {
 			res.json(err);
 		};
-
 		// Retrieve Users data and send it back to the front end.
 		User.getAllUsers(function(err, users) {
-
-=======
-		// Retrieve Users data and send it back to the front end.
-		User.getAllUsers(function(err, users) {
->>>>>>> 5bba8a8f7c9776244dbd2d91151a32c9c07dec89
 			Message.getMessagesFromUsers(users, function(err, data) {
 				cb(err, data);
 			});
