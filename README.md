@@ -1,4 +1,4 @@
-# Bi-directional SMS demo app.
+# Bi-directional SMS demo app
 
 ## Features
 
@@ -25,7 +25,7 @@ your Twilio account portal).
 
 	process.env.TWILIO_ASID = '{{YOUR ACCOUNT SID}}';
 	process.env.TWILIO_AUTH_TOKEN = '{{YOUR AUTH TOKEN}}';
-	process.env.TWILIO_PHONE_NUMBERS = ['{{TWILIO PHONE NUMBER}}','{{TWILIO PHONE NUMBER}}','{{TWILIO PHONE NUMBER}}'];
+	process.env.TWILIO_PHONE_NUMBERS = ['{{TWILIO PHONE NUMBER}}','{{TWILIO PHONE NUMBER}}'];
 
 Once you set the values in config.js, run the following:
 
@@ -64,7 +64,7 @@ Go to the Twilio number you specified in config.yml and set it's SMS URL to:
 
 **Now you're all set. Enjoy!**
 
-
+'''
                              ____
                           ,''    ''.
                          / `-.  .-' \
@@ -87,3 +87,4 @@ Go to the Twilio number you specified in config.yml and set it's SMS URL to:
             (; ; ;_,_,\  .: \   /
              `-'-'     | : . |:|
                        |. | : .|
+'''
