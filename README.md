@@ -64,7 +64,6 @@ Go to the Twilio number you specified in config.yml and set it's SMS URL to:
 
 **Now you're all set. Enjoy!**
 
-'''
                              ____
                           ,''    ''.
                          / `-.  .-' \
@@ -87,4 +86,3 @@ Go to the Twilio number you specified in config.yml and set it's SMS URL to:
             (; ; ;_,_,\  .: \   /
              `-'-'     | : . |:|
                        |. | : .|
-'''
