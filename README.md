@@ -5,3 +5,6 @@ Bi-directional SMS demo app.
 * threaded conversations
 * select from different phone numbers to use for SMS
 
+Running locally
+====
+
