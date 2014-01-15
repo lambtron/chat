@@ -6,6 +6,11 @@
 * threaded conversations
 * select from different phone numbers to use for SMS
 
+<<<<<<< HEAD
+Running locally
+====
+
+=======
 ## Installation
 
 This demo is built with NodeJS and MongoDB. Requirements:
@@ -86,3 +91,4 @@ Go to the Twilio number you specified in config.yml and set it's SMS URL to:
             (; ; ;_,_,\  .: \   /
              `-'-'     | : . |:|
                        |. | : .|
+>>>>>>> 1cbe64209f0317f6a59a14051646d95451369e58
