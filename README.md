@@ -42,7 +42,7 @@ Start mongo and you can begin your node server.
 Make sure to configure your Twilio phone numbers (the ones set in config.js). Set
 their SMS URLs to 
 
-* http://{{YOUR NGROK DOMAIN}}/api/message
+* http://your-ngrok-domain.com/api/message
 
 ## Deploying to Heroku
 
@@ -63,3 +63,27 @@ Go to the Twilio number you specified in config.yml and set it's SMS URL to:
 * http://your-app-domain.herokuapp.com/api/message
 
 **Now you're all set. Enjoy!**
+
+
+                             ____
+                          ,''    ''.
+                         / `-.  .-' \
+                        /( (O))((O) )
+                       /'-..-'/\`-..|
+                     ,'\   `-.\/.--'|
+                   ,' ( \           |
+                 ,'( (   `._        |
+                /( (  ( ( | `-._ _,-;
+               /( (  ( ( (|     '  ;
+              / ((  (    /        /
+             //         /        /
+             //  / /  ,'        /
+            // /    ,'         /
+            //  / ,'          ;
+            //_,-'          ;
+            // /,,,,..-))-))\    /|
+              /; ; ;\ `.  \  \  / |
+             /; ; ; ;\  \.  . \/./
+            (; ; ;_,_,\  .: \   /
+             `-'-'     | : . |:|
+                       |. | : .|
