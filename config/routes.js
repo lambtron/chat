@@ -19,7 +19,6 @@ var Twilio = require('../app/helpers/twilio');
 var mongoose = require('mongoose')
 	, Message = mongoose.model('Message')
 	, User = mongoose.model('User')
-	, my_phone_number = process.env.TWILIO_PHONE_NUMBER // Think about encapsulating this somewhere in the app level.
 	, my_phone_numbers = process.env.TWILIO_PHONE_NUMBERS
 	, _ = require('underscore');
 
