@@ -46,7 +46,6 @@ chatView.controller('mainController', ['$scope', '$http', 'socket', function($sc
 
   // Adding a new user.
   $scope.addUser = function() {
-    console.log('this is working');
     var postLoad = {}
     postLoad.firstName = $scope.newUser.firstName;
     postLoad.lastName = $scope.newUser.lastName;
@@ -70,8 +69,6 @@ chatView.controller('mainController', ['$scope', '$http', 'socket', function($sc
     postLoad.to = $('#user').attr('data-phone-number');
     postLoad.body = $scope.newMessage.body;
     postLoad.from = phoneNumbers.from;
-
-    console.log(postLoad);
 
     $http.post('/api/message', postLoad)
       .success(function(data) {

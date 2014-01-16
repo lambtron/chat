@@ -47,7 +47,7 @@ module.exports = function(app, io) {
 
 		User.findOne({ phone_number: phone_number }, function(err, user) {
 			if (err) {
-				res.send(err);
+				res.send(err, 400);
 			};
 
 			// If existing user is found.
@@ -67,7 +67,7 @@ module.exports = function(app, io) {
 					phone_number: phone_number
 				}, function(err, user) {
 					if (err) {
-						res.send(err);
+						res.send(err, 400);
 					};
 
 					// Need to return all users.
@@ -89,20 +89,6 @@ module.exports = function(app, io) {
 				res.json(data);
 			});
 		});
-	});
-
-	// Get messages.
-	app.get('/api/messages', function(req, res) {
-		// Use Mongoose to get all of the messages in the database.
-		// Only get the Messages in Mongodb where the 'from' or 'to' matches your Twilio number.
-		Message.find({ $or: [ {'to': my_phone_number}, {'from': my_phone_number} ] },
-			function(err, messages) {
-			if (err) {
-				res.send(err);
-			};
-			res.json(messages);
-		});
-
 	});
 
 	// Create a Message and send back all Messages.
@@ -142,18 +128,14 @@ module.exports = function(app, io) {
 			from : from
 		}, function(err, message) {
 			if (err) {
-				res.send(err);
+				res.send(err, 400);
 			};
 
 			// Check if there is a user with this phone number. If no user, create one.
 			User.findOne({ phone_number: from }, function(err, user) {
 				if (err) {
-					res.send(err);
+					res.send(err, 400);
 				};
-
-				console.log(my_phone_numbers);
-				console.log(from);
-				console.log(_.indexOf(my_phone_numbers, from));
 
 				// If no existing user is found.
 				if (!user && (_.indexOf(my_phone_numbers, from) != -1)) {
@@ -164,7 +146,7 @@ module.exports = function(app, io) {
 						phone_number: from
 					}, function(err, user) {
 						if (err) {
-							res.send(err);
+							res.send(err, 400);
 						};
 
 						// After create user, return all Users.
@@ -200,13 +182,13 @@ module.exports = function(app, io) {
 			_id : req.params.message_id
 		}, function(err, message) {
 			if (err) {
-				res.send(err);
+				res.send(err, 400);
 			};
 
 			// Get and return all of the messages after the message is deleted.
 			Message.find(function(err, message) {
 				if (err) {
-					res.send(err);
+					res.send(err, 400);
 				};
 				res.json(messages);
 			});
@@ -228,7 +210,7 @@ function returnAll(to, from, cb) {
 
 	User.refreshLastUpdatedOn(arr, function(err, data) {
 		if (err) {
-			res.json(err);
+			res.json(err, 400);
 		};
 		// Retrieve Users data and send it back to the front end.
 		User.getAllUsers(function(err, users) {
