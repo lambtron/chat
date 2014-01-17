@@ -37,6 +37,11 @@ module.exports = function(app, io) {
 		res.send({},200);
 	});
 
+	// Get phone numbers.
+	app.get('/api/numbers', function(req, res) {
+		res.send(my_phone_numbers,200);
+	});
+
 	// * POST, add new user to mongodb.
 	app.post('/api/user', function(req, res) {
 		console.log(req.body);
