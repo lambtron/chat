@@ -20,8 +20,7 @@ module.exports = {
     },
     standardizePhoneNumber: function(phone_number) {
         // 2409887757 to +12409887757
-        var new_phone_number = phone_number + '';
-        new_phone_number.replace(/[A-Za-z$-]/g, "");
+        var new_phone_number = phone_number.replace(/[A-Za-z$-]/g, "");
 
         console.log('old number: ' + phone_number);
         console.log('new number: ' + new_phone_number);
