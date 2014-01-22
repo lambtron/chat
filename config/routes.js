@@ -44,7 +44,7 @@ module.exports = function(app, io) {
 
 	// * POST, add new user to mongodb.
 	app.post('/api/user', function(req, res) {
-		console.log(req.body);
+		// console.log(req.body);
 
 		var first_name = req.body.firstName
 		  , last_name = req.body.lastName
@@ -99,15 +99,15 @@ module.exports = function(app, io) {
 	// Create a Message and send back all Messages.
 	app.post('/api/message', function(req, res) {
 		// Debugging purposes.
-		// console.log(JSON.stringify(req.body, null, 4));
+		console.log(JSON.stringify(req.body, null, 4));
 
 		// When a new message is created, we need to add a new user with the phone number as the first
 		// name and black as last name.
 
 		// Message specific variables.
 		var body = ''
-		  , to   = ''
-		  , from = '';
+			, to   = ''
+			, from = '';
 
 		if(typeof req.body.MessageSid !== "undefined") {
 			// If Twilio is making the POST request, then this is an inbound SMS.

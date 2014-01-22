@@ -10,13 +10,13 @@ chatView.controller('mainController', ['$scope', '$http', 'socket', function($sc
   var phoneNumbers = $scope.phoneNumbers = {
     numbers: [],
     from: ''
-  }
+  };
   // Set SelectedUser as the one with the most recent message to you.
   // Order users by last message created on (should be done in Routes.js)
 
   // Delete all by pressing this button.
   $scope.deleteAll = function() {
-    console.log('deleting');
+    // console.log('deleting');
     $http.delete('/api')
       .success(function(data) {
         $scope.users = data;
@@ -31,7 +31,7 @@ chatView.controller('mainController', ['$scope', '$http', 'socket', function($sc
   // Load only the Messages where your number is either the 'to' or the 'from'.
   $http.get('/api/users')
     .success(function(data) {
-      console.log(data);
+      // console.log(data);
       $scope.users = data;
       $scope.selectedUser = data[0].phone_number;
       // Also need to active.
@@ -59,7 +59,7 @@ chatView.controller('mainController', ['$scope', '$http', 'socket', function($sc
       .success(function(data) {
         $('input').val('');
         $scope.users = data;
-        console.log(data);
+        // console.log(data);
       })
       .error(function(data) {
         console.log('Error: ' + data);
@@ -81,8 +81,8 @@ chatView.controller('mainController', ['$scope', '$http', 'socket', function($sc
         $('input#message-body').val('');
         // Manually update the chat box. TODO.
         $scope.users = data;
-        console.log('new data: ' + data);
-        console.log('message received');
+        // console.log('new data: ' + data);
+        // console.log('message received');
       })
       .error(function(data) {
         console.log('Error: ' + data);
@@ -104,7 +104,7 @@ chatView.controller('mainController', ['$scope', '$http', 'socket', function($sc
   // Receiving data from server and pushing to front-end.
   socket.on('users', function(data) {
     $scope.users = data;
-    // console.log('we are receiving an inbound SMS from Twilio.');
-    // console.log(data);
+    console.log('we are receiving an inbound SMS from Twilio.');
+    console.log(data);
   });
 }]);
