@@ -22,6 +22,10 @@ module.exports = {
         // 2409887757 to +12409887757
         var new_phone_number = phone_number + '';
         new_phone_number.replace(/[A-Za-z$-]/g, "");
+
+        console.log('old number: ' + phone_number);
+        console.log('new number: ' + new_phone_number);
+
         if (new_phone_number.length == 10) {
             new_phone_number = '+1' + new_phone_number;
         };
