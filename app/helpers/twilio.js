@@ -13,8 +13,8 @@ module.exports = {
             from: from,
             body: body
         }, function(err, responseData) {
-            if (!err) {
-                console.log(responseData);
+            if (err) {
+                console.log(err);
             };
         });
     },

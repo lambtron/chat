@@ -10,7 +10,6 @@ chatView.directive('buttonsRadio', function() {
 		},
 		link: function($scope, element, attr) {
 			$scope.activate = function(idx) {
-				console.log(idx);
 				$scope.model = $scope.options[idx];
 			};
 		},
