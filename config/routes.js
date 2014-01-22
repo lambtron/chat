@@ -48,7 +48,7 @@ module.exports = function(app, io) {
 
 		var first_name = req.body.firstName
 			, last_name = req.body.lastName
-			, phone_number = Twilio.standardizePhoneNumber(req.body.phoneNumber);
+			, phone_number = Twilio.standardizePhoneNumber(req.body.phoneNumber + '');
 
 		User.findOne({ phone_number: phone_number }, function(err, user) {
 			if (err) {
@@ -112,13 +112,13 @@ module.exports = function(app, io) {
 		if(typeof req.body.MessageSid !== "undefined") {
 			// If Twilio is making the POST request, then this is an inbound SMS.
 			body = req.body.Body;
-			to = Twilio.standardizePhoneNumber(req.body.To);
-			from = Twilio.standardizePhoneNumber(req.body.From);
+			to = Twilio.standardizePhoneNumber(req.body.To + '');
+			from = Twilio.standardizePhoneNumber(req.body.From + '');
 		} else {
 			// Else, this is a POST request from the client, an outbound SMS.
 			body = req.body.body;
-			to = Twilio.standardizePhoneNumber(req.body.to);
-			from = Twilio.standardizePhoneNumber(req.body.from);
+			to = Twilio.standardizePhoneNumber(req.body.to + '');
+			from = Twilio.standardizePhoneNumber(req.body.from + '');
 
 			// Send POST request to Twilio to initate outbound SMS.
 			// To, From, Body
