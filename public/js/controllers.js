@@ -11,6 +11,7 @@ chatView.controller('mainController', ['$scope', '$http', 'socket', function($sc
     numbers: [],
     from: ''
   };
+
   // Set SelectedUser as the one with the most recent message to you.
   // Order users by last message created on (should be done in Routes.js)
 
@@ -42,8 +43,8 @@ chatView.controller('mainController', ['$scope', '$http', 'socket', function($sc
 
   $http.get('/api/numbers')
     .success(function(data) {
-      phoneNumbers.numbers = data.split(',');
-      phoneNumbers.from = phoneNumbers.numbers[0];
+      phoneNumbers.numbers = data;
+      phoneNumbers.from = phoneNumbers.numbers[0].phone_number;
     })
     .error(function(data) {
       console.log('Error: ' + data);

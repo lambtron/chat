@@ -39,7 +39,21 @@ module.exports = function(app, io) {
 
 	// Get phone numbers.
 	app.get('/api/numbers', function(req, res) {
-		res.send(my_phone_numbers,200);
+		// res.send(my_phone_numbers, 200);
+		// var a = Twilio.getAvailablePhoneNumbers();
+		// console.log(a);
+		Twilio.getAvailablePhoneNumbers(function(numbers) {
+			var cleanNumbers = [];
+			for (var i = 0; i < numbers.length; i ++ ) {
+				var cleanNumber = {};
+				cleanNumber.phone_number = numbers[i].phone_number;
+				cleanNumber.friendly_name = numbers[i].friendly_name;
+				cleanNumbers.push(cleanNumber);
+			}
+
+			res.send(cleanNumbers, 200);
+		});
+		// res.send(Twilio.getAvailablePhoneNumbers(), 200);
 	});
 
 	// * POST, add new user to mongodb.
