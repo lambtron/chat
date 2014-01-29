@@ -8,7 +8,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
 
-	<title>Chat</title>
+	<title>Two-way SMS Chat</title>
 
 	<!-- SCROLLS -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
@@ -44,9 +44,10 @@
 			<!-- body, to, from -->
 			<div class="col-md-4" style="">
 				<!-- 'Start new conversation' -->
+				<img src="/public/img/company.jpg" alt="Logo" style="width: 100%;">
 				<div class="btn-group" style="width: 100%">
 					<button id="new-user" class="btn btn-default btn-lg dropdown-toggle" style="width: 100%" data-toggle="dropdown">
-						New
+						New customer
 					</button>
 					<div class="dropdown-menu" style="width: 100%" role="menu">
 		        <div>
@@ -71,7 +72,7 @@
 				<buttons-radio class='btn-group btn-group-vertical' style='width: 100%' data-toggle='buttons-radio' model='selectedUser' options='users'>
 				</buttons-radio>
 				<div class='btn btn-warning' style='width: 100%' ng-click="deleteAll()">
-					Delete
+					Delete all
 				</div>
 			</div>
 
