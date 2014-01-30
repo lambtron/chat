@@ -90,16 +90,11 @@ chatView.controller('mainController', ['$scope', '$http', 'socket', function($sc
       });
   };
 
-  // delete a todo after checking it
   $scope.deleteMessage = function(id) {
     $http.delete('/api/message/' + id)
       .success(function(data) {
         $scope.messages = data;
         // console.log(data);
-        var preUnicode = $('.message').text();
-        $('.message').text(minEmoji(preUnicode));
-        console.log(preUnicode);
-        console.log(minEmoji(preUnicode));
       })
       .error(function(data) {
         console.log('Error: ' + data);
@@ -110,6 +105,19 @@ chatView.controller('mainController', ['$scope', '$http', 'socket', function($sc
   socket.on('users', function(data) {
     $scope.users = data;
     console.log('we are receiving an inbound SMS from Twilio.');
-    console.log(data);
+    
+    // Data is an array of objects.
+    // 
+
+    // Check the data. Pass it through the unicode.
+    // for(var i = 0; i < data.length; i++) {
+    //   for(var j = 0; j < data[i].chat.length; j++ ) {
+    //     data[i].chat[j].body = minEmoji(data[i].chat[j].body);
+    //   };
+    // };
+    // var preUnicode = $('.message').text();
+    // $('.message').text(minEmoji(preUnicode));
+    // console.log('pre unicode: ' + preUnicode);
+    // console.log('post unicode: ' + minEmoji(preUnicode));
   });
 }]);
