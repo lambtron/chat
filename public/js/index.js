@@ -5,4 +5,6 @@ $(document).ready(function() {
 	$('.dropdown-menu input').click(function(e) {
     e.stopPropagation();
 	});
+
+	$('.message').text($('.message').text());
 });

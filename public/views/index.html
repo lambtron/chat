@@ -93,10 +93,10 @@
 		        	<li ng-repeat="message in (user.chat | orderBy: 'created_on':false)">
 					    <!-- If the user's number matches the 'to' vs. the 'from' -->
 					    	<div ng-if="user.phone_number == message.from">
-					    		<strong>{{user.first_name}}</strong>: {{message.body}}
+					    		<strong>{{user.first_name}}</strong>: <span class="message">{{message.body}}</span>
 					    	</div>
 					    	<div ng-if="user.phone_number == message.to">
-					    		<strong>{{message.from}}</strong>: {{message.body}}
+					    		<strong>{{message.from}}</strong>: <span class="message">{{message.body}}</span>
 					    	</div>
 							</li>
 						</ul>
