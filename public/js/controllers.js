@@ -96,6 +96,8 @@ chatView.controller('mainController', ['$scope', '$http', 'socket', function($sc
       .success(function(data) {
         $scope.messages = data;
         // console.log(data);
+        var preUnicode = $('.message').text();
+        $('.message').text(minEmoji(preUnicode));
       })
       .error(function(data) {
         console.log('Error: ' + data);
