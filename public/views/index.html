@@ -6,7 +6,7 @@
 <head>
 	<!-- META -->
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+	<meta name="viewport" content="text/html; charset=UTF-8" http-equiv="Content-type">
 
 	<title>Two-way SMS Chat</title>
 
@@ -44,7 +44,11 @@
 			<!-- body, to, from -->
 			<div class="col-md-4" style="">
 				<!-- 'Start new conversation' -->
-				<img src="/public/img/company.jpg" alt="Logo" style="width: 100%;">
+				<div style="width: 100%; text-align: center">
+					<img src="/public/img/company.jpg" alt="Logo" style="width: 100%;">
+					<p>Two-way SMS chat client</p>
+				</div>
+
 				<div class="btn-group" style="width: 100%">
 					<button id="new-user" class="btn btn-default btn-lg dropdown-toggle" style="width: 100%" data-toggle="dropdown">
 						New customer
@@ -105,7 +109,7 @@
 							<!-- sendMessage() WILL send POST to API -->
 							<button type="submit" class="btn btn-primary btn-lg" style="width: 100%" ng-click="sendMessage()">Send</button>
 						</div>
-			      <select ng-model="phoneNumbers.from" ng-options="number.phone_number as number.phone_number for number in phoneNumbers.numbers">
+			      <select ng-model="phoneNumbers.from" ng-options="number.phone_number as number.friendly_name for number in phoneNumbers.numbers">
 			      </select>
 			      {{phoneNumber.from}}
 						<div style="clear:both">

@@ -47,7 +47,7 @@ module.exports = function(app, io) {
 			for (var i = 0; i < numbers.length; i ++ ) {
 				var cleanNumber = {};
 				cleanNumber.phone_number = numbers[i].phone_number;
-				cleanNumber.friendly_name = numbers[i].friendly_name;
+				cleanNumber.friendly_name = numbers[i].friendly_name + ' ' + numbers[i].phone_number;
 				cleanNumbers.push(cleanNumber);
 			}
 
