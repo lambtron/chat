@@ -217,6 +217,7 @@ module.exports = function(app, io) {
 	// Application route =============================================================================
 	app.get('*', function(req, res) {
 		// Load the single view file (Angular will handle the page changes).
+		res.set('Content-Type', 'text/html; charset=utf-8');
 		res.sendfile('index.html', {'root': './public/views/'});
 	});
 };
