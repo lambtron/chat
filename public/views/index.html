@@ -6,13 +6,14 @@
 <head>
 	<!-- META -->
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+	<meta name="viewport" content="text/html; charset=UTF-8" http-equiv="Content-type">
 
 	<title>Two-way SMS Chat</title>
 
 	<!-- SCROLLS -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/public/css/index.css">
+	<link rel="stylesheet" href="/public/css/minEmoji.css">
 	<!-- load bootstrap -->
 	
 	<style>
@@ -33,7 +34,7 @@
 
 	<!-- jQuery -->
 	<script src="/public/js/index.js"></script>
-	
+	<script src="/public/js/minEmoji.js"></script>
 </head>
 
 <!-- SET THE CONTROLLER AND GET ALL TODOS WITH INITIALIZE FUNCTION -->
@@ -44,7 +45,11 @@
 			<!-- body, to, from -->
 			<div class="col-md-4" style="">
 				<!-- 'Start new conversation' -->
-				<img src="/public/img/company.jpg" alt="Logo" style="width: 100%;">
+				<div style="width: 100%; text-align: center">
+					<img src="/public/img/company.jpg" alt="Logo" style="width: 100%;">
+					<p>Two-way SMS chat client</p>
+				</div>
+
 				<div class="btn-group" style="width: 100%">
 					<button id="new-user" class="btn btn-default btn-lg dropdown-toggle" style="width: 100%" data-toggle="dropdown">
 						New customer
@@ -88,10 +93,10 @@
 		        	<li ng-repeat="message in (user.chat | orderBy: 'created_on':false)">
 					    <!-- If the user's number matches the 'to' vs. the 'from' -->
 					    	<div ng-if="user.phone_number == message.from">
-					    		<strong>{{user.first_name}}</strong>: {{message.body}}
+					    		<strong>{{user.first_name}}</strong>: <span class="message">{{message.body}}</span>
 					    	</div>
 					    	<div ng-if="user.phone_number == message.to">
-					    		<strong>{{message.from}}</strong>: {{message.body}}
+					    		<strong>{{message.from}}</strong>: <span class="message">{{message.body}}</span>
 					    	</div>
 							</li>
 						</ul>
@@ -105,7 +110,7 @@
 							<!-- sendMessage() WILL send POST to API -->
 							<button type="submit" class="btn btn-primary btn-lg" style="width: 100%" ng-click="sendMessage()">Send</button>
 						</div>
-			      <select ng-model="phoneNumbers.from" ng-options="number.phone_number as number.phone_number for number in phoneNumbers.numbers">
+			      <select ng-model="phoneNumbers.from" ng-options="number.phone_number as number.friendly_name for number in phoneNumbers.numbers">
 			      </select>
 			      {{phoneNumber.from}}
 						<div style="clear:both">
