@@ -19,6 +19,7 @@ var Twilio = require('../app/helpers/twilio');
 var mongoose = require('mongoose')
 	, Message = mongoose.model('Message')
 	, User = mongoose.model('User')
+	, my_phone_numbers = []
 	, _ = require('underscore');
 
 // Public functions. ===============================================================================
@@ -50,6 +51,7 @@ module.exports = function(app, io) {
 				cleanNumbers.push(cleanNumber);
 			}
 
+			my_phone_numbers = cleanNumbers;
 			res.send(cleanNumbers, 200);
 		});
 		// res.send(Twilio.getAvailablePhoneNumbers(), 200);
